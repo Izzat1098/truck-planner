@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './App.css'
+import { planRoute } from './services/api'
 
 function App() {
   const [currentLocation, setCurrentLocation] = useState('')
@@ -14,27 +15,15 @@ function App() {
     setMessage('')
 
     try {
-      const response = await fetch('http://localhost:3000/api/plan-route', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          currentLocation,
-          pickupLocation,
-          dropoffLocation,
-          currentCycleUsed,
-        }),
+      const data = await planRoute({
+        currentLocation,
+        pickupLocation,
+        dropoffLocation,
+        currentCycleUsed,
       })
 
-      const data = await response.json()
-
-      if (response.ok) {
-        setMessage('Route planned successfully!')
-        console.log('Response:', data)
-      } else {
-        setMessage(`Error: ${data.message || 'Failed to plan route'}`)
-      }
+      setMessage('Route planned successfully!')
+      console.log('Response:', data)
     } catch (error) {
       setMessage(`Error: ${error instanceof Error ? error.message : 'Failed to connect to server'}`)
     } finally {
