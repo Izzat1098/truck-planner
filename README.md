@@ -4,13 +4,13 @@ A Full Stack Web App that helps create daily travel plans for trucks. Enter curr
 
 *Note:* This is a monorepo which contains the backend (Python Django) and frontend (React TS) in the same repo.
 
-## Key goals ##
+## Key goals
 
 - Rapidly prototype route planning and visualization
 - Provide a minimal API for generating daily plans from location inputs
 - Demonstrate React frontend map integration with Leaflet and a Django API
 
-## Tech stack ##
+## Tech stack
 
 - **Backend**: Python v3.11, Django v5.2, OpenRouteService (for geolocation and travel distances)
 - **Frontend**: React v19.2, TypeScript, Vite
@@ -65,7 +65,7 @@ Top-level repository layout (paths are workspace-relative):
             └── api.types.ts
 ```
 
-## How to run ## 
+## How To Run - For Developers
 
 **Backend**
 
@@ -84,3 +84,9 @@ cd frontend
 npm install
 npm run dev
 ```
+
+
+## Future Enhancements
+1. Enchance the trip duration plan to include rest, stops, sleeper berth, fuelling, etc.
+2. Include stops, rest, fuelling in the map
+3. Add more inputs (driving conditions, vehicle speed, weather) to improve trip planning
