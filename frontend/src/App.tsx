@@ -1,6 +1,9 @@
 import { useState } from 'react'
 import './App.css'
 import { planRoute } from './services/api'
+import type { PlanRouteResponse } from './types/api.types'
+import MapComponent from './components/MapComponent'
+import DailyPlanComponent from './components/DailyPlanComponent'
 
 function App() {
   const [currentLocation, setCurrentLocation] = useState('')
@@ -9,33 +12,39 @@ function App() {
   const [currentCycleUsed, setCurrentCycleUsed] = useState('')
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
+  const [tripData, setTripData] = useState<PlanRouteResponse | null>(null)
 
-  const handlePlanRoute = async () => {
+  const handlePlanRoute = async (e: React.FormEvent) => {
+    e.preventDefault()
     setLoading(true)
     setMessage('')
+    setTripData(null)
 
     try {
       const data = await planRoute({
         currentLocation,
         pickupLocation,
         dropoffLocation,
-        currentCycleUsed,
+        currentCycleUsed: parseFloat(currentCycleUsed) || 0,
       })
 
       setMessage('Route planned successfully!')
+      setTripData(data)
       console.log('Response:', data)
+
     } catch (error) {
       setMessage(`Error: ${error instanceof Error ? error.message : 'Failed to connect to server'}`)
+
     } finally {
       setLoading(false)
     }
   }
 
   return (
-    <div className="p-8 max-w-2xl mx-auto">
+    <div className="p-8 w-5xl mx-auto">
       <h1 className="text-3xl font-bold mb-6">Truck Route Planner</h1>
       
-      <div className="flex flex-col gap-4">
+      <form onSubmit={handlePlanRoute} className="flex flex-col gap-4">
         <div>
           <label htmlFor="currentLocation" className="block mb-2 font-medium">
             Current Location:
@@ -88,12 +97,12 @@ function App() {
             value={currentCycleUsed}
             onChange={(e) => setCurrentCycleUsed(e.target.value)}
             className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Enter current cycle used"
+            placeholder="Enter current cycle used in this week"
           />
         </div>
 
         <button
-          onClick={handlePlanRoute}
+          type="submit"
           disabled={loading}
           className={`mt-4 px-6 py-3 text-base font-medium text-white bg-blue-600 rounded-md transition-colors ${
             loading 
@@ -115,7 +124,23 @@ function App() {
             {message}
           </div>
         )}
-      </div>
+      </form>
+
+      {/* Display Map and Daily Plan when trip data is available */}
+      {tripData && tripData.tripDetails && (
+        <div className="mt-8">
+          <h2 className="text-2xl font-bold mb-4">Trip Overview</h2>
+          
+          {/* Map Component */}
+          <MapComponent
+            coordinates={tripData.tripDetails.coordinates}
+            locations={tripData.tripDetails.locations}
+          />
+
+          {/* Daily Plan Component */}
+          <DailyPlanComponent dailyPlan={tripData.tripDetails.dailyPlan} />
+        </div>
+      )}
     </div>
   )
 }
