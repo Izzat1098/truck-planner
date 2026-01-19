@@ -10,6 +10,30 @@ A Full Stack Web App that helps create daily travel plans for trucks. Enter curr
 - Provide a minimal API for generating daily plans from location inputs
 - Demonstrate React frontend map integration with Leaflet and a Django API
 
+
+## Screenshots
+
+### Case 1: Short Route Planning
+
+**Input:**
+
+![Input Case 1](.screenshots/input.png)
+
+**Output:**
+
+![Output Case 1](.screenshots/output.png)
+
+### Case 2: Long Distance Route
+
+**Input:**
+
+![Input Case 2](.screenshots/input2.png)
+
+**Output:**
+
+![Output Case 2](.screenshots/output2.png)
+
+
 ## Tech stack
 
 - **Backend**: Python v3.11, Django v5.2, OpenRouteService (for geolocation and travel distances)
@@ -65,27 +89,6 @@ Top-level repository layout (paths are workspace-relative):
             └── api.types.ts
 ```
 
-## Screenshots
-
-### Case 1: Short Route Planning
-
-**Input:**
-
-![Input Case 1](.screenshots/input.png)
-
-**Output:**
-
-![Output Case 1](.screenshots/output.png)
-
-### Case 2: Long Distance Route
-
-**Input:**
-
-![Input Case 2](.screenshots/input2.png)
-
-**Output:**
-
-![Output Case 2](.screenshots/output2.png)
 
 ## How To Run - For Developers
 
