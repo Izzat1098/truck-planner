@@ -3,4 +3,4 @@ django-cors-headers==4.9.0
 openrouteservice==2.3.3
 python-dotenv==1.2.1
 gunicorn==23.0.0
-whitenoise==6.8.2
+whitenoise==6.11.0
