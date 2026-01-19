@@ -6,8 +6,6 @@ from openrouteservice import client
 from dotenv import load_dotenv
 from .utils import meters_to_miles
 
-# Load environment variables from backend/.env
-# Get the backend directory path (parent of routes directory)
 backend_dir = Path(__file__).resolve().parent.parent
 dotenv_path = backend_dir / '.env'
 load_dotenv(dotenv_path)
@@ -34,11 +32,9 @@ def geocode_location(location_name):
         if not geocode_result.get('features'):
             raise ValueError(f"Could not find coordinates for location: {location_name}")
         
-        # Get the first (best) result
         coords = geocode_result['features'][0]['geometry']['coordinates']
         location_address = geocode_result['features'][0]['properties'].get('label', '')
         
-        # Return as (longitude, latitude)
         return coords
         
     except Exception as e:
@@ -50,21 +46,7 @@ def calculate_route_distance(start_coords, end_coords, unit = None):
     Calculate driving distance between two locations using OpenRouteService.
     Returns distance in miles.
     """
-    # Get API key from environment variable
-    # api_key = os.getenv('OPENROUTESERVICE_API_KEY')
-    
-    # if not api_key:
-    #     raise ValueError("OPENROUTESERVICE_API_KEY not found in environment variables. "
-    #                     "Please set it in your .env file or environment.")
-    
-    # Initialize OpenRouteService client
     ors_client = client.Client(key=api_key)
-    
-    # Geocode locations to coordinates (long, lat)
-    # start_coords = geocode_location(start_location)
-    # end_coords = geocode_location(end_location)
-    
-    # Calculate route
     coords = [start_coords, end_coords]
     
     try:

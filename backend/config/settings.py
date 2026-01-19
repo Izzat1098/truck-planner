@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -125,9 +126,19 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # CORS settings
-CORS_ALLOWED_ORIGINS = [
+default_cors_origins = [
     'http://localhost:5173',  # Vite default port
     'http://localhost:3000',  # Alternative frontend port
 ]
+
+# Allow extending/overriding CORS origins from an environment variable.
+# Example: CORS_ALLOWED_ORIGINS="https://example.com,https://admin.example.com"
+env_origins = os.getenv('CORS_ALLOWED_ORIGINS')
+if env_origins:
+    parsed = [o.strip() for o in env_origins.split(',') if o.strip()]
+    # Merge defaults with env-provided origins while preserving order and removing duplicates
+    CORS_ALLOWED_ORIGINS = list(dict.fromkeys(default_cors_origins + parsed))
+else:
+    CORS_ALLOWED_ORIGINS = default_cors_origins
 
 CORS_ALLOW_CREDENTIALS = True

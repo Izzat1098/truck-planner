@@ -12,7 +12,7 @@ class TripPlanner:
     Handles trip planning calculations and feasibility checks.
     """
     
-    # Constants
+    # Constants - We may want to make this user input in future for more flexible calculation
     MAX_DRIVING_HOURS_DAY = 11  # Maximum driving hours per day
     MAX_DRIVING_HOURS_CYCLE = 70  # Maximum driving hours per cycle
     CYCLE_DAYS = 8 # Days in cycle
